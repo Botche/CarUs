@@ -1,0 +1,47 @@
+html {
+    font-size: $font-html-size;
+	line-height: 1.5;
+
+	font-family: sans-serif;
+}
+
+body {
+    font-size: 1.6rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	line-height: 1.2;
+}
+
+$headings: (h1: 2.5em, h2: 2em, h3: 1.5em, h5: 1.2em, h6: 1em);
+
+@each $heading, $size in $headings {
+	#{$heading} { font-size: $size; }
+}
+
+li {
+	list-style-position: inside;
+}
+
+a {
+    color: $color-black;
+    text-decoration: none;
+}
+
+@include respond($phone-screen-size) {
+	body {
+		font-size: $font-tablet-size;
+	}
+}
+
+@include respond($tablet-screen-size) {
+	body {
+		font-size: $font-pc-size;
+	}
+}
+
+@include respond($pc-screen-size) {
+	body {
+		font-size: $font-tv-size;
+	}
+}

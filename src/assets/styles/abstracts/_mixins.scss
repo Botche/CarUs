@@ -1,0 +1,47 @@
+@mixin absolute-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+@mixin clear-float {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin reset-button {
+  overflow: visible;
+
+  width: auto;
+
+  border: none;
+  border-width: 0;
+  border-radius: 0;
+  outline: none;
+  
+  background: transparent;
+
+  font: inherit;
+  line-height: normal;
+  text-align: inherit;
+  color: inherit;
+
+  cursor: pointer;
+}
+
+// example - @include respond(80rem);
+@mixin respond($pixelsWidth) {
+  @if ($pixelsWidth > $minimum-screen-size) {
+    @media screen and (min-width: $pixelsWidth) {
+      @content;
+    }
+  } @else {
+    @media screen and (max-width: $pixelsWidth) {
+      @content;
+    }
+  }
+}
