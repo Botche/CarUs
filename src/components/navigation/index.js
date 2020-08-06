@@ -26,8 +26,11 @@ function Navigation(props) {
 
     const navigationItems = routes.map((route) => <NavigationItem link={route.link} key={route.title}>{route.title}</NavigationItem>)
 
+    const classNavigationName = `navigation-${props.navigationType}`;
+    const navigationStyle = styles[classNavigationName];
+
     return (
-        <ul className={styles.navigation}>
+        <ul className={navigationStyle}>
             {navigationItems}
         </ul>
     );

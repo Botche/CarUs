@@ -1,0 +1,31 @@
+@import '../../assets/styles/abstracts/variables/colors';
+
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 0 2rem;
+
+    background-color: $color-background-black;
+
+    color: $color-white;
+    
+    &__svgs {
+        display: flex;
+        justify-content: space-between;
+
+        height: 80%;
+        width: 10%;
+    }
+    
+    &__link {
+        flex-basis: 50%;
+
+        color: currentColor;
+
+        &:hover {
+            color: $color-hover-link-nav;
+        }
+    }
+}

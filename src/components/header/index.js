@@ -5,7 +5,7 @@ import Navigation from '../navigation';
 function Header(props) {
     return (
         <header>
-            <Navigation />
+            <Navigation navigationType="header" />
         </header>
     );
 }

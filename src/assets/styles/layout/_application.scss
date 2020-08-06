@@ -1,2 +1,6 @@
 .application {
+    display: grid;
+    grid-template-rows: 7% 1fr 7%;
+
+    min-height: 100vh;
 }

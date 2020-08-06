@@ -1,12 +1,27 @@
-.navigation {
+@import '../../assets/styles/abstracts/variables/colors';
+
+.navigation-header {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
 
-    background-color: #1E1F26;
+    background-color: $color-background-black;
 
-    height: 5rem;
+    height: 100%;
+
+    list-style-type: none;
+}
+
+.navigation-footer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+    background-color: $color-background-black;
+
+    height: 100%;
 
     list-style-type: none;
 }
