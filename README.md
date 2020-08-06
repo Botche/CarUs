@@ -1,2 +1,2 @@
 # Carus
-Project for ReactJs course at Softuni
+Project for ReactJS course at Softuni
