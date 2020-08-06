@@ -1,0 +1,30 @@
+.item {
+    flex-basis: 25%;
+
+    height: 100%;
+
+    text-align: center;
+
+    &:hover {
+        background-color: #FFFFFF;
+    }
+}
+
+.link {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+    color: #FFFFFF;
+
+    &:hover {
+        background-color: #c0c0c0;
+
+        color: #474747;
+
+        cursor: pointer;
+    }
+}

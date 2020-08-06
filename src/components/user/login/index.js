@@ -6,7 +6,7 @@ function Login(props) {
     
   return (
     <Layout>
-        dasdasdadasdasdasd
+        Login
     </Layout>
   );
 }

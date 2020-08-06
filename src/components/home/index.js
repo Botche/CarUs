@@ -2,13 +2,13 @@ import React from 'react';
 
 import Layout from '../layout';
 
-function Car(props) {
-    
+function Home(props) {
+
   return (
     <Layout>
-        Car
+      Home page
     </Layout>
   );
 }
 
-export default Car;
+export default Home;

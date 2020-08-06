@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+
+import Header from '../header';
 
 // import styles from './index.module.scss';
 
 function Layout(props) {
-    
+
   return (
-    <div>
+    <Fragment>
+      <Header />
+
+      <main>
         {props.children}
-    </div>
+      </main>
+
+      <footer>
+        
+      </footer>
+    </Fragment>
   );
 }
 
