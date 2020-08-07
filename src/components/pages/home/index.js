@@ -30,7 +30,7 @@ function Home(props) {
 
   return (
     <Layout>
-      <h1 className={styles.header__title}>Car catalog</h1>
+      <h1 className={styles.header__title}>CarUs catalog</h1>
 
       <CarList cars={cars} />
     </Layout>

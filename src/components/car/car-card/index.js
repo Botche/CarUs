@@ -23,11 +23,11 @@ function CarCard(props) {
                 <p className={styles.card__description}>{shortDescription}</p>
 
                 <div className={styles.card__links}>
-                    <Button styles={[styles['card__link'], styles['card__link--green']].join(' ')} path={`/car/edit/${props._id}`}> 
-                        Edit
-                    </Button>
                     <Button  styles={[styles['card__link'], styles['card__link--red']].join(' ')} path={`/car/delete/${props._id}`}> 
                         Delete
+                    </Button>
+                    <Button styles={[styles['card__link'], styles['card__link--green']].join(' ')} path={`/car/edit/${props._id}`}> 
+                        Edit
                     </Button>
                     <Button  styles={[styles['card__link'], styles['card__link--grey']].join(' ')} path={`/car/details/${props._id}`}> 
                         Details
