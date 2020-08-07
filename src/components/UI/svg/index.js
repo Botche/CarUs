@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react';
+import React from 'react';
 
 import sprite from '../../../assets/images/svg-sprite/svg-sprite.svg';
 

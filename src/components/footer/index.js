@@ -1,6 +1,5 @@
 import React from 'react';
 
-import Navigation from '../navigation';
 import SVG from '../UI/svg';
 
 import styles from './index.module.scss';

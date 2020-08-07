@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Layout from '../layout';
+import Layout from '../../layout';
 
 function ErrorPage(props) {
     return (

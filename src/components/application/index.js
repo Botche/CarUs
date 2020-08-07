@@ -2,12 +2,12 @@ import React, { useState, Fragment } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import { Route, Switch } from 'react-router';
 
-import Login from '../user/login';
-import Register from '../user/register';
-import Logout from '../user/logout';
+import Login from '../pages/user/login';
+import Register from '../pages/user/register';
+import Logout from '../pages/user/logout';
 import Car from '../car';
-import ErrorPage from '../errorPage';
-import Home from '../home';
+import ErrorPage from '../pages/errorPage';
+import Home from '../pages/home';
 
 import '../../assets/styles/main.scss';
 
