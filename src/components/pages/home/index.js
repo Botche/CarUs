@@ -2,11 +2,11 @@ import React from 'react';
 
 import Layout from '../../layout';
 import CarList from '../../car/car-list';
+import userFunctions from '../../../services/user';
 
 import styles from './index.module.scss';
 
 function Home(props) {
-
   const cars = [
     {
       href: 'https://images.unsplash.com/photo-1593642634524-b40b5baae6bb?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80',

@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 
-import Layout from '../../../layout';
+import { Redirect } from 'react-router-dom';
+
+import userFunction from '../../../../services/user';
+import UserContext from '../../../../Context';
 
 function Logout(props) {
-    return (
-      <Layout>   
-        <p>Log out</p>
-      </Layout>
-    );
+  const context = useContext(UserContext);
+
+  useEffect(() => {
+    userFunction.logout()
+      .then(() => {
+        context.logOut();
+      });
+  }) 
+  
+  return <Redirect to="/" />
 }
 
 export default Logout;

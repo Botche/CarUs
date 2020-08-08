@@ -9,13 +9,13 @@ function Layout(props) {
 
   return (
     <Fragment>
-      <Header />
+        <Header />
 
-      <main className={styles.main}>
-        {props.children}
-      </main>
+        <main className={styles.main}>
+          {props.children}
+        </main>
 
-      <Footer />
+        <Footer />
     </Fragment>
   );
 }

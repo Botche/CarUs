@@ -1,22 +1,28 @@
 import React from 'react';
 
 import NavigationItem from './navigation-item';
+import userFunctions from '../../services/user';
 
 import styles from './index.module.scss';
 
 function Navigation(props) {
-    const routes = [
+    const routes = userFunctions.isLoggedIn() === false ? [
         {
             title: 'Home',
             link: '/',
         },
         {
-            title: 'Login',
-            link: '/user/login',
+            title: 'Authenticate',
+            link: '/user',
+        },
+    ] : [
+        {
+            title: 'Home',
+            link: '/',
         },
         {
-            title: 'Register',
-            link: '/user/register',
+            title: 'Create',
+            link: '/car/create',
         },
         {
             title: 'Logout',

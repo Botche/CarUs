@@ -1,38 +1,42 @@
-import React, { useState, Fragment } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-import { Route, Switch } from 'react-router';
+import { Route, Switch, Redirect } from 'react-router';
 
-import Login from '../pages/user/login';
-import Register from '../pages/user/register';
-import Logout from '../pages/user/logout';
+import User from '../pages/user';
 import Car from '../car';
 import ErrorPage from '../pages/errorPage';
 import Home from '../pages/home';
+import LogOut from '../pages/user/logout';
+import UserContext from '../../Context';
 
 import '../../assets/styles/main.scss';
 
 function Application(props) {
-  const [ isloggedIn, setIsLoggedIn ] = useState(false);
-
-  const routes = isloggedIn === false ?
-  (
-    <Fragment>
-      <Route exact path="/user/register" component={Register} />
-      <Route exact path="/user/logout" component={Logout} />
-      <Route exact path="/user/login" component={Login} />
-    </Fragment>
-  )
-  :
-  (
-    <Route exact path="/car/all" component={Car} />
-  );
-
-
+  const context = useContext(UserContext);
+  const isLoggedIn = context.user.loggedIn;
+console.log(context);
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Home} />
-        {routes}
+        <Route path="/" exact component={Home} />
+        <Route path="/car"> 
+          { isLoggedIn === true
+              ? (<Car /> )
+              : (<Redirect to="/" />)
+          }
+        </Route>
+        <Route path="/user/logout">
+          { isLoggedIn === true
+              ? (<LogOut /> )
+              : (<Redirect to="/" />)
+          }
+        </Route>
+        <Route path="/user">
+          { isLoggedIn === true
+              ? (<Redirect to="/" />)
+              : (<User />)
+          }
+        </Route>
         <Route component={ErrorPage} />
       </Switch>
     </BrowserRouter>

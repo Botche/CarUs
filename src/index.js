@@ -1,20 +1,16 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import ReactDOM from 'react-dom';
 
-import * as serviceWorker from './serviceWorker';
-
 import Application from './components/application';
+import Context from './UserContext';
 
 ReactDOM.render(
   <React.StrictMode>
-      <Application> 
-        
-      </Application>
+    <Fragment>
+      <Context>
+        <Application />
+      </Context>
+    </Fragment>
   </React.StrictMode>,
   document.getElementById('application')
 );
-
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
