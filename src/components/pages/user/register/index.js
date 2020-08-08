@@ -22,10 +22,9 @@ function Register(props) {
     await userFunction.register(email, password);
 
     const user = userFunction.getEmailAndIdFromCookie();
-    console.log(user);
-    // context.logIn(user);
+    context.logIn(user);
 
-    // history.push('/');
+    history.push('/');
   }
 
   const isInvalid =

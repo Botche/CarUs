@@ -3,8 +3,6 @@ import 'firebase/auth';
 
 require('dotenv').config();
 
-console.log(process.env)
-
 const config = {
     apiKey: process.env.REACT_APP_CARUS_API_KEY,
     authDomain: process.env.REACT_APP_CARUS_AUTH_DOMAIN,

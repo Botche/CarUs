@@ -2,7 +2,6 @@ import React from 'react';
 
 import Layout from '../../layout';
 import CarList from '../../car/car-list';
-import userFunctions from '../../../services/user';
 
 import styles from './index.module.scss';
 

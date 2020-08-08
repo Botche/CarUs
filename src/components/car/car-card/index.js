@@ -1,14 +1,35 @@
-import React from 'react';
+import React, { useContext, Fragment } from 'react';
 
 import Button from '../../UI/link-button';
+import UserContext from '../../../Context';
 
 import styles from './index.module.scss';
 
 function CarCard(props) {
+    const context = useContext(UserContext);
+
+    const isLoggedIn = context.user.loggedIn;
 
     const shortDescription = props.description.length >= 100 
         ? props.description.slice(0, 75) + '...'
         : props.description;
+
+    const determinateIfOwner =  () => {
+        if (isLoggedIn) {
+            return (
+                <Fragment>
+                    <Button  styles={[styles['card__link'], styles['card__link--red']].join(' ')} path={`/car/delete/${props._id}`}> 
+                        Delete
+                    </Button>
+                    <Button styles={[styles['card__link'], styles['card__link--green']].join(' ')} path={`/car/edit/${props._id}`}> 
+                        Edit
+                    </Button>
+                </Fragment>
+            )
+        }
+
+        return null;
+    }
 
     return (
         <div className={styles.card}>
@@ -22,12 +43,7 @@ function CarCard(props) {
                 <p className={styles.card__description}>{shortDescription}</p>
 
                 <div className={styles.card__links}>
-                    <Button  styles={[styles['card__link'], styles['card__link--red']].join(' ')} path={`/car/delete/${props._id}`}> 
-                        Delete
-                    </Button>
-                    <Button styles={[styles['card__link'], styles['card__link--green']].join(' ')} path={`/car/edit/${props._id}`}> 
-                        Edit
-                    </Button>
+                    {determinateIfOwner()}
                     <Button  styles={[styles['card__link'], styles['card__link--grey']].join(' ')} path={`/car/details/${props._id}`}> 
                         Details
                     </Button>

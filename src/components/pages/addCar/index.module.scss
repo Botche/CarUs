@@ -1,0 +1,35 @@
+@import '../../../assets/styles/abstracts/mixins';
+@import '../../../assets/styles/abstracts/variables/colors';
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+    width: 40%;
+    margin: 0 auto;
+
+    text-align: center;
+}
+
+.form {
+    &__button {
+        @include reset-button;
+
+        padding: 1rem 2rem;
+        margin-top: 2rem;
+
+        border-radius: 1rem;
+
+        width: 100%;
+
+        background-color: $color-yellow;
+
+        color: $color-white;
+
+        &:hover {
+            background-color: rgba($color-yellow, 0.8);
+        }
+    }
+}

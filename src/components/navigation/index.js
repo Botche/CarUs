@@ -21,8 +21,8 @@ function Navigation(props) {
             link: '/',
         },
         {
-            title: 'Create',
-            link: '/car/create',
+            title: 'Add car',
+            link: '/car/add',
         },
         {
             title: 'Logout',

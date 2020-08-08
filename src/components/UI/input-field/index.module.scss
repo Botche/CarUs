@@ -1,0 +1,23 @@
+.form {
+
+    &__label {
+        display: flex;
+        justify-content: space-between;
+
+        margin-bottom: 1rem;
+    }
+
+    &__span {
+        flex-basis: 60%;
+        flex-grow: 1;
+
+        text-align: initial;
+    }
+
+    &__input {
+        display: block;
+        width: 50%;
+
+        text-indent: 1rem;
+    }
+}
