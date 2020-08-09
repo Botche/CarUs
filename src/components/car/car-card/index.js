@@ -34,11 +34,12 @@ function CarCard(props) {
     return (
         <div className={styles.card}>
             <div className={styles.card__media}>
-                <img src={props.href} alt={props.name} />
+                <img src={props.imageUrl} alt={props.brand} />
             </div>
 
             <div className={styles.card__content}>
-                <h2 className={styles.card__title}>{props.name}</h2>
+                <h2 className={styles.card__title}>{props.brand}</h2>
+                <h3 className={styles.card__title}>{props.model}</h3>
 
                 <p className={styles.card__description}>{shortDescription}</p>
 

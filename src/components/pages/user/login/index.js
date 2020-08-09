@@ -19,7 +19,7 @@ function Login(props) {
 
     await userFunction.login(email, password);
     
-    const user = userFunction.getEmailAndIdFromCookie();
+    const user = userFunction.getAllFromCookie();
     context.logIn(user);
 
     history.push('/');

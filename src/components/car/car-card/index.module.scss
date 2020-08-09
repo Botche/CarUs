@@ -61,4 +61,8 @@
             background-color: $color-grey;
         }
     }
+
+    &:hover { 
+        background-color: rgba(#a7a7a7, 0.1);
+    }
 }

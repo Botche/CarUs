@@ -2,17 +2,19 @@ import jwt from'jsonwebtoken';
 import firebase from '../firebase';
 
 const login = async (email, password) => {
-    await firebase.loginWithEmailAndPassword(email, password);
+    const response = await firebase.loginWithEmailAndPassword(email, password);
     const user = firebase.currentUser();
+    const token = response.user.xa;
 
-    return createCookie(user.uid, user.email);;
+    return createCookie(user.uid, user.email, token);;
 }
 
 const register = async (email, password) => {
-    await firebase.registerWithEmailAndPassword(email, password);
+    const response =await firebase.registerWithEmailAndPassword(email, password);
     const user = firebase.currentUser();
+    const token = response.user.xa;
 
-    return createCookie(user.uid, user.email);;
+    return createCookie(user.uid, user.email, token);
 }
 
 const logout = async () => {
@@ -27,15 +29,16 @@ const generateToken = user => {
     return token;
 }
 
-const createCookie = (uId, email) => {
-    const token = generateToken({
+const createCookie = (uId, email, token) => {
+    const jwtToken = generateToken({
         uId: uId,
         email: email,
+        token: token
     });
     
-    document.cookie = "aid=" + (token || "") + "; path=/";
+    document.cookie = "aid=" + (jwtToken || "") + "; path=/";
 
-    return token;
+    return jwtToken;
 };
 
 const deleteCookie = () => {
@@ -48,14 +51,15 @@ const getCookie = (name) => {
     return cookieValue ? cookieValue[2] : null;
 }
 
-const getEmailAndIdFromCookie = () => {
+const getAllFromCookie = () => {
     const cookieValue = getCookie('aid');
     try {
         const decodeObject = jwt.verify(cookieValue, process.env.REACT_APP_JWT_PRIVATE_KEY);
         
         return {
             uid: decodeObject.uId,
-            email: decodeObject.email
+            email: decodeObject.email,
+            token: decodeObject.token
         }
     } catch (e) {
         return false;
@@ -80,5 +84,5 @@ export default {
     logout,
     isLoggedIn,
     getCookie,
-    getEmailAndIdFromCookie
+    getAllFromCookie
 };

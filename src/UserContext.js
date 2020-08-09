@@ -22,11 +22,12 @@ const Context = (props) => {
 
   useEffect(() => {
     if(userFunctions.isLoggedIn() === true) {
-      const user = userFunctions.getEmailAndIdFromCookie();
+      const user = userFunctions.getAllFromCookie();
   
       logIn({
         email: user.email,
-        id: user.uid  
+        id: user.uid,
+        token: user.token
       })
     } else{
       logOut();
