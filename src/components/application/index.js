@@ -11,6 +11,7 @@ import CreateCar from '../pages/addCar';
 import EditCar from '../pages/editCar';
 
 import '../../assets/styles/main.scss';
+import DeleteCar from '../pages/deleteCar';
 
 function Application(props) {
   const context = useContext(UserContext);
@@ -29,6 +30,12 @@ function Application(props) {
         <Route path="/car/edit/:id">
           { isLoggedIn === true
               ? (<EditCar />)
+              : (<Redirect to="/" />)
+          }
+        </Route>
+        <Route path="/car/delete/:id">
+          { isLoggedIn === true
+              ? (<DeleteCar />)
               : (<Redirect to="/" />)
           }
         </Route>

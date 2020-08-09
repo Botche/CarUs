@@ -117,7 +117,7 @@ function EditCar(props) {
                     <Input styleClass={styles['form__input']} label="Fuel" id="fuel" value={fuel} onChangeHandler={(event) => setFuel(event.target.value)} />
                     <Input styleClass={styles['form__input']} label="Description" id="description" value={description} onChangeHandler={(event) => setDescription(event.target.value)} />
 
-                    <Button text={'Add to our catalog'} styleClass={styles['form__button']} />
+                    <Button text={`Edit car`} styleClass={styles['form__button']} />
                 </form>
             </div>
         );
