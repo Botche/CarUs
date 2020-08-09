@@ -13,15 +13,15 @@ function CarCard(props) {
     const shortDescription = props.description.length >= 100 
         ? props.description.slice(0, 75) + '...'
         : props.description;
-
+        
     const determinateIfOwner =  () => {
         if (isLoggedIn) {
             return (
                 <Fragment>
-                    <Button  styles={[styles['card__link'], styles['card__link--red']].join(' ')} path={`/car/delete/${props._id}`}> 
+                    <Button styles={[styles['card__link'], styles['card__link--red']].join(' ')} path={`/car/delete/${props.id}`}> 
                         Delete
                     </Button>
-                    <Button styles={[styles['card__link'], styles['card__link--green']].join(' ')} path={`/car/edit/${props._id}`}> 
+                    <Button styles={[styles['card__link'], styles['card__link--green']].join(' ')} path={`/car/edit/${props.id}`}> 
                         Edit
                     </Button>
                 </Fragment>
@@ -45,10 +45,10 @@ function CarCard(props) {
 
                 <div className={styles.card__links}>
                     {determinateIfOwner()}
-                    <Button  styles={[styles['card__link'], styles['card__link--grey']].join(' ')} path={`/car/details/${props._id}`}> 
+                    <Button  styles={[styles['card__link'], styles['card__link--grey']].join(' ')} path={`/car/details/${props.id}`}> 
                         Details
                     </Button>
-                    <Button  styles={[styles['card__link'], styles['card__link--blue']].join(' ')} path={`/car/rent/${props._id}`}> 
+                    <Button  styles={[styles['card__link'], styles['card__link--blue']].join(' ')} path={`/car/rent/${props.id}`}> 
                         Rent Now
                     </Button>
                 </div>

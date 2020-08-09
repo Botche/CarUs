@@ -1,9 +1,13 @@
 .carList {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
     flex-wrap: wrap;
 
     width: 90%;
 
     margin: 0 auto;
+}
+
+.spinner-home {
+    height: 70%;
 }

@@ -1,39 +1,79 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 
 import UserContext from '../../../Context';
 import Input from '../../UI/input-field';
 import Layout from '../../layout';
 import Button from '../../UI/button';
 import requester from '../../../services/firebase/requester';
+import { useHistory, useParams } from 'react-router-dom';
 
 import styles from './index.module.scss';
-import { useHistory } from 'react-router-dom';
+import Spinner from '../../UI/spinner';
 
-function CreateCar (props) {
+function EditCar(props) {
     const context = useContext(UserContext);
     const history = useHistory();
+    const [spinner, setSpinner] = useState(true);
 
-    const [ town, setTown ] = useState('');
-    const [ brand, setBrand ] = useState('');
-    const [ model, setModel ] = useState('');
-    const [ price, setPrice ] = useState(0);
-    const [ year, setYear ] = useState(0);
-    const [ kilometers, setKilometers ] = useState(0);
-    const [ power, setPower ] = useState(0);
-    const [ seats, setSeats ] = useState(0);
-    const [ color, setColor ] = useState('');
-    const [ transmition, setTransmition ] = useState('');
-    const [ fuel, setFuel ] = useState('');
-    const [ description, setDescription ] = useState('');
-    const [ imageUrl, setImageUrl ] = useState('');
+    const [town, setTown] = useState('');
+    const [brand, setBrand] = useState('');
+    const [model, setModel] = useState('');
+    const [price, setPrice] = useState(0);
+    const [year, setYear] = useState(0);
+    const [kilometers, setKilometers] = useState(0);
+    const [power, setPower] = useState(0);
+    const [seats, setSeats] = useState(0);
+    const [color, setColor] = useState('');
+    const [transmition, setTransmition] = useState('');
+    const [fuel, setFuel] = useState('');
+    const [description, setDescription] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
+
+    const { id } = useParams();
+    const { uid, email, token } = context.user;
+
+    useEffect(() => {
+        requester.getItem(`cars/${id}.json?auth=${token}`)
+            .then(response => {
+                setTown(response.town);
+                setBrand(response.brand);
+                setModel(response.model);
+                setPrice(response.price);
+                setYear(response.year);
+                setKilometers(response.kilometers);
+                setPower(response.power);
+                setSeats(response.seats);
+                setColor(response.color);
+                setTransmition(response.transmition);
+                setFuel(response.fuel);
+                setDescription(response.description);
+                setImageUrl(response.imageUrl);
+
+                setSpinner(false);
+            });
+    }, [
+        setTown,
+        setBrand,
+        setModel,
+        setPrice,
+        setYear,
+        setKilometers,
+        setPower,
+        setSeats,
+        setColor,
+        setTransmition,
+        setFuel,
+        setDescription,
+        setImageUrl,
+        setSpinner,
+        id,
+        token
+    ]);
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
-
-        const { uid, email, token } = context.user;
-
         try {
-            await requester.createItem(`cars.json?auth=${token}`, {
+            await requester.updateItem(`cars/${id}.json?auth=${token}`, {
                 town,
                 brand,
                 model,
@@ -50,18 +90,20 @@ function CreateCar (props) {
                 description,
                 imageUrl
             });
-    
+
             history.push('/');
-        } catch(error) {
+        } catch (error) {
             console.log(error);
         }
     };
 
-    return (
-        <Layout>
+    let html = (<Spinner />);
+
+    if (spinner === false) {
+        html = (
             <div className={styles['form-container']}>
                 <form onSubmit={event => onSubmitHandler(event)}>
-                    <Input styleClass={styles['form__input']} label="Town" id="town" value={town}  onChangeHandler={(event) => setTown(event.target.value)} />
+                    <Input styleClass={styles['form__input']} label="Town" id="town" value={town} onChangeHandler={(event) => setTown(event.target.value)} />
                     <Input styleClass={styles['form__input']} label="Brand" id="brand" value={brand} onChangeHandler={(event) => setBrand(event.target.value)} />
                     <Input styleClass={styles['form__input']} label="Model" id="model" value={model} onChangeHandler={(event) => setModel(event.target.value)} />
                     <Input styleClass={styles['form__input']} label="ImageUrl" id="imageUrl" value={imageUrl} onChangeHandler={(event) => setImageUrl(event.target.value)} type={'url'} />
@@ -75,12 +117,18 @@ function CreateCar (props) {
                     <Input styleClass={styles['form__input']} label="Fuel" id="fuel" value={fuel} onChangeHandler={(event) => setFuel(event.target.value)} />
                     <Input styleClass={styles['form__input']} label="Description" id="description" value={description} onChangeHandler={(event) => setDescription(event.target.value)} />
 
-                    <Button text={'Add to our catalog'} styleClass={styles['form__button'] } />
+                    <Button text={'Add to our catalog'} styleClass={styles['form__button']} />
                 </form>
             </div>
+        );
+    }
+
+    return (
+        <Layout>
+            {html}
         </Layout>
     );
 
 };
 
-export default CreateCar;
+export default EditCar;

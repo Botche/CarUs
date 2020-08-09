@@ -1,5 +1,6 @@
 import jwt from'jsonwebtoken';
 import firebase from '../firebase';
+import moment from 'moment';
 
 const login = async (email, password) => {
     const response = await firebase.loginWithEmailAndPassword(email, password);
@@ -28,7 +29,7 @@ const generateToken = user => {
 
     return token;
 }
-
+console.log();
 const createCookie = (uId, email, token) => {
     const jwtToken = generateToken({
         uId: uId,
@@ -36,7 +37,7 @@ const createCookie = (uId, email, token) => {
         token: token
     });
     
-    document.cookie = "aid=" + (jwtToken || "") + "; path=/";
+    document.cookie = "aid= " + (jwtToken || "") + "; expires = " + moment().add(1, 'hours').toDate() + "; path=/;";
 
     return jwtToken;
 };
@@ -70,9 +71,10 @@ const isLoggedIn = () => {
     const cookieValue = getCookie('aid');
     try {
         jwt.verify(cookieValue, process.env.REACT_APP_JWT_PRIVATE_KEY);
-        
+        console.log(true)
         return true;
     } catch (e) {
+        console.log(false)
         return false;
     }
 };

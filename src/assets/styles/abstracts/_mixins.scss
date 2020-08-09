@@ -33,9 +33,9 @@
   cursor: pointer;
 }
 
-// example - @include respond(80rem);
+// example - @include respond(600px);
 @mixin respond($pixelsWidth) {
-  @if ($pixelsWidth > $minimum-screen-size) {
+  @if ($pixelsWidth > 600) {
     @media screen and (min-width: $pixelsWidth) {
       @content;
     }

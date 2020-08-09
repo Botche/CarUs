@@ -8,6 +8,7 @@ import Home from '../pages/home';
 import LogOut from '../pages/user/logout';
 import UserContext from '../../Context';
 import CreateCar from '../pages/addCar';
+import EditCar from '../pages/editCar';
 
 import '../../assets/styles/main.scss';
 
@@ -19,9 +20,15 @@ function Application(props) {
     <BrowserRouter>
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/car"> 
+        <Route path="/car/add"> 
           { isLoggedIn === true
               ? (<CreateCar /> )
+              : (<Redirect to="/" />)
+          }
+        </Route>
+        <Route path="/car/edit/:id">
+          { isLoggedIn === true
+              ? (<EditCar />)
               : (<Redirect to="/" />)
           }
         </Route>
