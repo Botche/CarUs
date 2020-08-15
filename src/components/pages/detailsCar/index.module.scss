@@ -1,0 +1,33 @@
+@import '../../../assets/styles/abstracts/variables/colors';
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    width: 40%;
+    margin: 2rem auto;
+
+    text-align: center;
+
+    &__media {
+        border: 0.5rem solid #000000;
+    }
+
+    &__paragraph {
+        margin: 1rem 0;
+    }
+
+    &__text--bold {
+        font-weight: bold;
+    }
+
+    &__button {
+        color: $color-white;
+
+        &--blue {
+            background-color: $color-blue;
+        }
+    }
+}

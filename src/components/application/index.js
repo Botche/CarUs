@@ -12,6 +12,7 @@ import EditCar from '../pages/editCar';
 
 import '../../assets/styles/main.scss';
 import DeleteCar from '../pages/deleteCar';
+import Details from '../pages/detailsCar';
 
 function Application(props) {
   const context = useContext(UserContext);
@@ -33,6 +34,7 @@ function Application(props) {
               : (<Redirect to="/" />)
           }
         </Route>
+        <Route path="/car/details/:id" component={Details} />
         <Route path="/car/delete/:id">
           { isLoggedIn === true
               ? (<DeleteCar />)

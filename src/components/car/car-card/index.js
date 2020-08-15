@@ -13,11 +13,16 @@ function CarCard(props) {
         ? props.description.slice(0, 75) + '...'
         : props.description;
 
-    const defaultButtons = (
+    const defaultButton = (
         <Fragment>
             <Button styles={[styles['card__link'], styles['card__link--grey']].join(' ')} path={`/car/details/${props.id}`}>
                 Details
             </Button>
+        </Fragment>
+    );
+
+    const userButton = (
+        <Fragment>
             <Button styles={[styles['card__link'], styles['card__link--blue']].join(' ')} path={`/car/rent/${props.id}`}>
                 Rent Now
             </Button>
@@ -36,11 +41,16 @@ function CarCard(props) {
     );
 
     const carCardButtons = isAuthor === false 
-        ? defaultButtons
+        ? (
+            <Fragment>
+                {defaultButton}
+                {userButton}
+            </Fragment>
+        )
         : ( 
             <Fragment>
                 {ownerButtons}
-                {defaultButtons}
+                {defaultButton}
             </Fragment>
         );
 
