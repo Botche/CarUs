@@ -21,7 +21,7 @@ function Register(props) {
 
     await userFunction.register(email, password);
 
-    const user = userFunction.getEmailAndIdFromCookie();
+    const user = userFunction.getAllFromCookie();
     context.logIn(user);
 
     history.push('/');

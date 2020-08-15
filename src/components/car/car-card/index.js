@@ -1,4 +1,4 @@
-import React, { useContext, Fragment } from 'react';
+import React, { useContext, Fragment, useState, useEffect } from 'react';
 
 import Button from '../../UI/link-button';
 import UserContext from '../../../Context';
@@ -7,29 +7,48 @@ import styles from './index.module.scss';
 
 function CarCard(props) {
     const context = useContext(UserContext);
+    const [isAuthor, setIsAuthor] = useState(false);
 
-    const isLoggedIn = context.user.loggedIn;
-
-    const shortDescription = props.description.length >= 100 
+    const shortDescription = props.description.length >= 100
         ? props.description.slice(0, 75) + '...'
         : props.description;
-        
-    const determinateIfOwner =  () => {
-        if (isLoggedIn) {
-            return (
-                <Fragment>
-                    <Button styles={[styles['card__link'], styles['card__link--red']].join(' ')} path={`/car/delete/${props.id}`}> 
-                        Delete
-                    </Button>
-                    <Button styles={[styles['card__link'], styles['card__link--green']].join(' ')} path={`/car/edit/${props.id}`}> 
-                        Edit
-                    </Button>
-                </Fragment>
-            )
-        }
 
-        return null;
-    }
+    const defaultButtons = (
+        <Fragment>
+            <Button styles={[styles['card__link'], styles['card__link--grey']].join(' ')} path={`/car/details/${props.id}`}>
+                Details
+            </Button>
+            <Button styles={[styles['card__link'], styles['card__link--blue']].join(' ')} path={`/car/rent/${props.id}`}>
+                Rent Now
+            </Button>
+        </Fragment>
+    );
+
+    const ownerButtons = (
+        <Fragment>
+            <Button styles={[styles['card__link'], styles['card__link--red']].join(' ')} path={`/car/delete/${props.id}`}>
+                Delete
+            </Button>
+            <Button styles={[styles['card__link'], styles['card__link--green']].join(' ')} path={`/car/edit/${props.id}`}>
+                Edit
+            </Button>
+        </Fragment>
+    );
+
+    const carCardButtons = isAuthor === false 
+        ? defaultButtons
+        : ( 
+            <Fragment>
+                {ownerButtons}
+                {defaultButtons}
+            </Fragment>
+        );
+
+    useEffect(() => {
+        if (context.user.uid && props.uid === context.user.uid) {
+            setIsAuthor(true);
+        }
+    }, [ setIsAuthor ]);
 
     return (
         <div className={styles.card}>
@@ -44,13 +63,7 @@ function CarCard(props) {
                 <p className={styles.card__description}>{shortDescription}</p>
 
                 <div className={styles.card__links}>
-                    {determinateIfOwner()}
-                    <Button  styles={[styles['card__link'], styles['card__link--grey']].join(' ')} path={`/car/details/${props.id}`}> 
-                        Details
-                    </Button>
-                    <Button  styles={[styles['card__link'], styles['card__link--blue']].join(' ')} path={`/car/rent/${props.id}`}> 
-                        Rent Now
-                    </Button>
+                    {carCardButtons}
                 </div>
             </div>
         </div>

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 
 import userFunction from '../../../../services/user';
 import UserContext from '../../../../Context';
@@ -22,7 +22,7 @@ function Login(props) {
     const user = userFunction.getAllFromCookie();
     context.logIn(user);
 
-    history.push('/');
+    return ( <Redirect to="/" /> )
   }
 
   const isInvalid =

@@ -6,11 +6,13 @@ import Layout from '../../layout';
 import Button from '../../UI/button';
 import requester from '../../../services/firebase/requester';
 import { useHistory, useParams } from 'react-router-dom';
+import Spinner from '../../UI/spinner';
+import AccessDenied from '../../UI/access-denied';
 
 import styles from './index.module.scss';
-import Spinner from '../../UI/spinner';
 
 function EditCar(props) {
+
     const context = useContext(UserContext);
     const history = useHistory();
     const [spinner, setSpinner] = useState(true);
@@ -69,6 +71,10 @@ function EditCar(props) {
         id,
         token
     ]);
+
+    if(!id || id !== context.user.id) {
+       return ( <AccessDenied />) 
+    }
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();

@@ -26,7 +26,7 @@ const Context = (props) => {
   
       logIn({
         email: user.email,
-        id: user.uid,
+        uid: user.uid,
         token: user.token
       })
     } else{

@@ -29,7 +29,7 @@ const generateToken = user => {
 
     return token;
 }
-console.log();
+
 const createCookie = (uId, email, token) => {
     const jwtToken = generateToken({
         uId: uId,
@@ -71,10 +71,8 @@ const isLoggedIn = () => {
     const cookieValue = getCookie('aid');
     try {
         jwt.verify(cookieValue, process.env.REACT_APP_JWT_PRIVATE_KEY);
-        console.log(true)
         return true;
     } catch (e) {
-        console.log(false)
         return false;
     }
 };
