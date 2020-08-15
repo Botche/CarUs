@@ -5,11 +5,9 @@ import Layout from '../../layout';
 
 function AccessDenied(props) {
     return (
-        <Layout>
-            <div>
-                Access denied
-            </div>
-        </Layout>
+        <div>
+            Access denied
+        </div>
     );
 }
 

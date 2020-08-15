@@ -29,6 +29,7 @@ function DeleteCar(props) {
     const [fuel, setFuel] = useState('');
     const [description, setDescription] = useState('');
     const [imageUrl, setImageUrl] = useState('');
+    const [isAuthor, setIsAuthor] = useState(false);
 
     const { id } = useParams();
     const { uid, email, token } = context.user;
@@ -51,6 +52,10 @@ function DeleteCar(props) {
                 setImageUrl(response.imageUrl);
 
                 setSpinner(false);
+
+                if(response.uid === context.user.uid) {
+                    setIsAuthor(true); 
+                }
             });
     }, [
         setTown,
@@ -68,12 +73,9 @@ function DeleteCar(props) {
         setImageUrl,
         setSpinner,
         id,
-        token
+        token,
+        setIsAuthor
     ]);
-
-    if(!props.uid || props.uid !== context.user.id) {
-       return ( <AccessDenied />) 
-    }
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
@@ -89,27 +91,31 @@ function DeleteCar(props) {
     let html = (<Spinner />);
 
     if (spinner === false) {
-        html = (
-            <div className={styles['form-container']}>
-                <form onSubmit={event => onSubmitHandler(event)}>
-                    <Input disabled={true} styleClass={styles['form__input']} label="Town" id="town" value={town} onChangeHandler={(event) => setTown(event.target.value)} />
-                    <Input disabled={true} styleClass={styles['form__input']} label="Brand" id="brand" value={brand} onChangeHandler={(event) => setBrand(event.target.value)} />
-                    <Input disabled={true} styleClass={styles['form__input']} label="Model" id="model" value={model} onChangeHandler={(event) => setModel(event.target.value)} />
-                    <Input disabled={true} styleClass={styles['form__input']} label="ImageUrl" id="imageUrl" value={imageUrl} onChangeHandler={(event) => setImageUrl(event.target.value)} type={'url'} />
-                    <Input disabled={true} styleClass={styles['form__input']} label="Price per kilometer" id="price" value={price} onChangeHandler={(event) => setPrice(event.target.value)} type={'number'} />
-                    <Input disabled={true} styleClass={styles['form__input']} label="Year of production" id="year" value={year} onChangeHandler={(event) => setYear(event.target.value)} type={'number'} />
-                    <Input disabled={true} styleClass={styles['form__input']} label="Kilometers travelled" id="kilometers" value={kilometers} onChangeHandler={(event) => setKilometers(event.target.value)} type={'number'} />
-                    <Input disabled={true} styleClass={styles['form__input']} label="Horse power" id="power" value={power} onChangeHandler={(event) => setPower(event.target.value)} type={'number'} />
-                    <Input disabled={true} styleClass={styles['form__input']} label="Seats" id="seats" value={seats} onChangeHandler={(event) => setSeats(event.target.value)} type={'number'} />
-                    <Input disabled={true} styleClass={styles['form__input']} label="Color" id="color" value={color} onChangeHandler={(event) => setColor(event.target.value)} />
-                    <Input disabled={true} styleClass={styles['form__input']} label="Transmition" id="transmition" value={transmition} onChangeHandler={(event) => setTransmition(event.target.value)} />
-                    <Input disabled={true} styleClass={styles['form__input']} label="Fuel" id="fuel" value={fuel} onChangeHandler={(event) => setFuel(event.target.value)} />
-                    <Input disabled={true} styleClass={styles['form__input']} label="Description" id="description" value={description} onChangeHandler={(event) => setDescription(event.target.value)} />
-
-                    <Button text={'Remove from catalog'} styleClass={styles['form__button']} />
-                </form>
-            </div>
-        );
+        if (isAuthor === false) {
+            html = ( <AccessDenied />);
+        } else {
+            html = (
+                <div className={styles['form-container']}>
+                    <form onSubmit={event => onSubmitHandler(event)}>
+                        <Input disabled={true} styleClass={styles['form__input']} label="Town" id="town" value={town} onChangeHandler={(event) => setTown(event.target.value)} />
+                        <Input disabled={true} styleClass={styles['form__input']} label="Brand" id="brand" value={brand} onChangeHandler={(event) => setBrand(event.target.value)} />
+                        <Input disabled={true} styleClass={styles['form__input']} label="Model" id="model" value={model} onChangeHandler={(event) => setModel(event.target.value)} />
+                        <Input disabled={true} styleClass={styles['form__input']} label="ImageUrl" id="imageUrl" value={imageUrl} onChangeHandler={(event) => setImageUrl(event.target.value)} type={'url'} />
+                        <Input disabled={true} styleClass={styles['form__input']} label="Price per kilometer" id="price" value={price} onChangeHandler={(event) => setPrice(event.target.value)} type={'number'} />
+                        <Input disabled={true} styleClass={styles['form__input']} label="Year of production" id="year" value={year} onChangeHandler={(event) => setYear(event.target.value)} type={'number'} />
+                        <Input disabled={true} styleClass={styles['form__input']} label="Kilometers travelled" id="kilometers" value={kilometers} onChangeHandler={(event) => setKilometers(event.target.value)} type={'number'} />
+                        <Input disabled={true} styleClass={styles['form__input']} label="Horse power" id="power" value={power} onChangeHandler={(event) => setPower(event.target.value)} type={'number'} />
+                        <Input disabled={true} styleClass={styles['form__input']} label="Seats" id="seats" value={seats} onChangeHandler={(event) => setSeats(event.target.value)} type={'number'} />
+                        <Input disabled={true} styleClass={styles['form__input']} label="Color" id="color" value={color} onChangeHandler={(event) => setColor(event.target.value)} />
+                        <Input disabled={true} styleClass={styles['form__input']} label="Transmition" id="transmition" value={transmition} onChangeHandler={(event) => setTransmition(event.target.value)} />
+                        <Input disabled={true} styleClass={styles['form__input']} label="Fuel" id="fuel" value={fuel} onChangeHandler={(event) => setFuel(event.target.value)} />
+                        <Input disabled={true} styleClass={styles['form__input']} label="Description" id="description" value={description} onChangeHandler={(event) => setDescription(event.target.value)} />
+    
+                        <Button text={'Remove from catalog'} styleClass={styles['form__button']} />
+                    </form>
+                </div>
+            );
+        }
     }
 
     return (
