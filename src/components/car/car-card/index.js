@@ -58,7 +58,7 @@ function CarCard(props) {
         if (context.user.uid && props.uid === context.user.uid) {
             setIsAuthor(true);
         }
-    }, [ setIsAuthor ]);
+    }, [ setIsAuthor, context.user.uid, props.uid ]);
 
     return (
         <div className={styles.card}>

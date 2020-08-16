@@ -11,6 +11,10 @@
 
     flex-basis: 30%;
 
+    &:hover { 
+        background-color: rgba(#a7a7a7, 0.1);
+    }
+
     &__media {
 
         width: 100%;
@@ -50,7 +54,7 @@
         }
     }
 
-    &:hover { 
-        background-color: rgba(#a7a7a7, 0.1);
+    &__leftMinutes {
+        margin-left: auto;
     }
 }

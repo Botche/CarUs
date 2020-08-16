@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { useParams, Redirect, useHistory } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 
 import moment from 'moment';
 
@@ -19,12 +20,12 @@ function RentCar(props) {
 
     const [brand, setBrand] = useState('');
     const [model, setModel] = useState('');
-    const [price, setPrice] = useState(0);
     const [time, setTime] = useState(0);
     const [imageUrl, setImageUrl] = useState('');
+    const { addToast } = useToasts();
 
     const { id } = useParams();
-    const { uid, email, token } = context.user;
+    const { uid, token } = context.user;
 
     useEffect(() => {
         const url = token ? `cars/${id}.json?auth=${token}` : `cars/${id}.json`;
@@ -33,7 +34,6 @@ function RentCar(props) {
             .then(response => {
                 setBrand(response.brand);
                 setModel(response.model);
-                setPrice(response.price);
                 setImageUrl(response.imageUrl);
 
                 setSpinner(false);
@@ -41,7 +41,6 @@ function RentCar(props) {
     }, [
         setBrand,
         setModel,
-        setPrice,
         setImageUrl,
         setSpinner,
         id,
@@ -51,17 +50,27 @@ function RentCar(props) {
     const onSubmitHandler = (event) => {
         event.preventDefault();
         if (uid) {
-            const date = moment().add(event.target.time.value, 'minutes').format('LLLL');
-            const url = token ? `cars/${id}.json?auth=${token}` : `cars/${id}.json`;
+            try {
+                if(time <= 0) {
+                    throw new Error('Time cannot be equal or less than zero!');
+                }
 
-            requester.updateItem(url, {
-                isRented: true,
-                rentedToDate: date,
-                renterId: uid
-            })
-                .then(response => {
-                    history.push('/');
-                });
+                const minutesToSeconds = time * 60;
+                const date = moment().add(minutesToSeconds, 'seconds').format('LLLL');
+
+                const url = token ? `cars/${id}.json?auth=${token}` : `cars/${id}.json`;
+
+                requester.updateItem(url, {
+                    isRented: true,
+                    rentedToDate: date,
+                    renterId: uid
+                })
+                    .then(response => {
+                        history.push('/');
+                    });
+            } catch (error) {
+                addToast(error.message, { appearance: 'error' });
+            }
         } else {
             history.push('/user');
         }
@@ -77,9 +86,9 @@ function RentCar(props) {
                     <p>Car: {brand} - {model}</p>
                 </div>
                 <form onSubmit={onSubmitHandler} className={styles['container__form']}>
-                    <Input styleClass={styles['container__form-input']} label="Time in minutes" id="time" value={time}  onChangeHandler={(event) => setTime(event.target.value)} type='number' />
-                    
-                    <Button text={'Rent the car'} styleClass={styles['container__form-button'] } />
+                    <Input styleClass={styles['container__form-input']} label="Time in minutes" id="time" value={time} onChangeHandler={(event) => setTime(event.target.value)} type='number' />
+
+                    <Button text={'Rent the car'} styleClass={styles['container__form-button']} />
                 </form>
             </div>
         );

@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react';
+import { useToasts } from 'react-toast-notifications';
 
 import UserContext from '../../../Context';
 import Input from '../../UI/input-field';
@@ -26,6 +27,7 @@ function CreateCar (props) {
     const [ fuel, setFuel ] = useState('');
     const [ description, setDescription ] = useState('');
     const [ imageUrl, setImageUrl ] = useState('');
+    const { addToast } = useToasts();
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
@@ -33,6 +35,13 @@ function CreateCar (props) {
         const { uid, email, token } = context.user;
 
         try {
+            if (!town || !brand || !model
+                || price <= 0 || year < 1900 || kilometers < 0
+                || power <= 0 || seats <= 0 || !color
+                || !transmition || !fuel || !description) {
+                throw Error('Some inputs are invalid ( empty or invalid values )');
+            }
+
             await requester.createItem(`cars.json?auth=${token}`, {
                 town,
                 brand,
@@ -56,7 +65,7 @@ function CreateCar (props) {
     
             history.push('/');
         } catch(error) {
-            console.log(error);
+            addToast(error.message, { appearance: 'error' });
         }
     };
 
@@ -75,7 +84,7 @@ function CreateCar (props) {
                     <Input styleClass={styles['form__input']} label="Seats" id="seats" value={seats} onChangeHandler={(event) => setSeats(event.target.value)} type={'number'} />
                     <Input styleClass={styles['form__input']} label="Color" id="color" value={color} onChangeHandler={(event) => setColor(event.target.value)} />
                     <Input styleClass={styles['form__input']} label="Transmition" id="transmition" value={transmition} onChangeHandler={(event) => setTransmition(event.target.value)} />
-                    <Input styleClass={styles['form__input']} label="Fuel" id="fuel" value={fuel} onChangeHandler={(event) => setFuel(event.target.value)} />
+                    <Input styleClass={styles['form__input']} label="Type fuel" id="fuel" value={fuel} onChangeHandler={(event) => setFuel(event.target.value)} />
                     <Input styleClass={styles['form__input']} label="Description" id="description" value={description} onChangeHandler={(event) => setDescription(event.target.value)} />
 
                     <Button text={'Add to our catalog'} styleClass={styles['form__button'] } />

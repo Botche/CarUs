@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useToasts } from 'react-toast-notifications';
 
 import UserContext from '../../../Context';
 import Input from '../../UI/input-field';
@@ -31,6 +32,8 @@ function EditCar(props) {
     const [description, setDescription] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [isAuthor, setIsAuthor] = useState(false);
+    const [authorId, setAuthorId] = useState('');
+    const { addToast } = useToasts();
 
     const { id } = useParams();
     const { uid, email, token } = context.user;
@@ -51,6 +54,7 @@ function EditCar(props) {
                 setFuel(response.fuel);
                 setDescription(response.description);
                 setImageUrl(response.imageUrl);
+                setAuthorId(response.uid);
 
                 setSpinner(false);
 
@@ -75,12 +79,25 @@ function EditCar(props) {
         setSpinner,
         id,
         token,
-        setIsAuthor
+        setIsAuthor,
+        setAuthorId,
+        context.user.uid
     ]);
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
         try {
+            if (context.user.uid !== authorId) {
+                throw new Error('You are not author :)');
+            }
+
+            if (!town || !brand || !model
+                || price <= 0 || year < 1900 || kilometers < 0
+                || power <= 0 || seats <= 0 || !color
+                || !transmition || !fuel || !description) {
+                throw Error('Some inputs are invalid ( empty or invalid values )');
+            }
+
             await requester.updateItem(`cars/${id}.json?auth=${token}`, {
                 town,
                 brand,
@@ -101,7 +118,7 @@ function EditCar(props) {
 
             history.push('/');
         } catch (error) {
-            console.log(error);
+            addToast(error.message, { appearance: 'error' });
         }
     };
 

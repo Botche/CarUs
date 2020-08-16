@@ -5,7 +5,6 @@ import moment from 'moment';
 import Layout from '../../layout';
 import requester from '../../../services/firebase/requester';
 import Spinner from '../../UI/spinner';
-import CarCard from '../../car/car-card';
 import UserContext from '../../../Context';
 
 import styles from './index.module.scss';
@@ -18,7 +17,7 @@ function RentedCars(props) {
     const [cars, setCars] = useState([]);
 
     useEffect(() => {
-        const { uid, email, token } = context.user;
+        const { uid, token } = context.user;
         const url = token ? `cars.json?auth=${token}` : 'cars.json';
         requester
             .getItem(url)

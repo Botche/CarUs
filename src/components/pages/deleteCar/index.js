@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { useToasts } from 'react-toast-notifications';
 
 import UserContext from '../../../Context';
 import Input from '../../UI/input-field';
@@ -30,9 +31,11 @@ function DeleteCar(props) {
     const [description, setDescription] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [isAuthor, setIsAuthor] = useState(false);
+    const { addToast } = useToasts();
+    const [authorId, setAuthorId] = useState('');
 
     const { id } = useParams();
-    const { uid, email, token } = context.user;
+    const { token } = context.user;
 
     useEffect(() => {
         requester.getItem(`cars/${id}.json?auth=${token}`)
@@ -50,6 +53,7 @@ function DeleteCar(props) {
                 setFuel(response.fuel);
                 setDescription(response.description);
                 setImageUrl(response.imageUrl);
+                setAuthorId(response.uid);
 
                 setSpinner(false);
 
@@ -74,17 +78,23 @@ function DeleteCar(props) {
         setSpinner,
         id,
         token,
-        setIsAuthor
+        setIsAuthor,
+        setAuthorId,
+        context.user.uid
     ]);
 
     const onSubmitHandler = async (event) => {
         event.preventDefault();
         try {
+            if (context.user.uid !== authorId) {
+                throw new Error();
+            }
+
             await requester.deleteItem(`cars/${id}.json?auth=${token}`);
 
             history.push('/');
         } catch (error) {
-            console.log(error);
+            addToast('Something went wrong with car id :)', { appearance: 'error' });
         }
     };
 

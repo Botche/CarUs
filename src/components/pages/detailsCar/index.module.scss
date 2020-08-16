@@ -12,11 +12,14 @@
     text-align: center;
 
     &__media {
+        height: 30rem;
         border: 0.5rem solid #000000;
     }
 
     &__paragraph {
         margin: 1rem 0;
+
+        word-break: break-all;
     }
 
     &__text--bold {

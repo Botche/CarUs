@@ -29,7 +29,7 @@ function Details(props) {
     const [isAuthor, setIsAuthor] = useState(false);
 
     const { id } = useParams();
-    const { uid, email, token } = context.user;
+    const { token } = context.user;
 
     useEffect(() => {
         const url = token ? `cars/${id}.json?auth=${token}` : `cars/${id}.json`;
@@ -73,7 +73,8 @@ function Details(props) {
         setSpinner,
         id,
         token,
-        setIsAuthor
+        setIsAuthor,
+        context.user.uid
     ]);
 
     let html = (<Spinner />);
