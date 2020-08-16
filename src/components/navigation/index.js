@@ -25,6 +25,10 @@ function Navigation(props) {
             link: '/car/add',
         },
         {
+            title: 'Rented cars',
+            link: '/user/rented-cars',
+        },
+        {
             title: 'Logout',
             link: '/user/logout',
         }

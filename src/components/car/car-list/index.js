@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import styles from './index.module.scss';
+import moment from 'moment';
+
 import CarCard from '../car-card';
 import requester from '../../../services/firebase/requester';
 import UserContext from '../../../Context';
 import Spinner from '../../UI/spinner';
+
+import styles from './index.module.scss';
 
 function CarList(props) {
     const context = useContext(UserContext);
@@ -20,10 +23,27 @@ function CarList(props) {
             const carsFromDb = [];
 
             for (const key in response) {
-                carsFromDb.push({
-                    id: key,
-                    ...response[key]
-                });
+                if(response[key].isRented === false) {
+                    carsFromDb.push({
+                        id: key,
+                        ...response[key]
+                    });
+                } else {
+                    if(moment().diff(response[key].rentedToDate) > 0) {
+                        const url = token ? `cars/${key}.json?auth=${token}` : `cars/${key}.json`;
+
+                        requester.updateItem(url, {
+                            isRented: false,
+                            rentedToDate: '',
+                            renterId: ''
+                        });
+                        
+                        carsFromDb.push({
+                            id: key,
+                            ...response[key]
+                        });
+                    }
+                }
             }
             
             setCars(carsFromDb);
@@ -37,8 +57,10 @@ function CarList(props) {
         html = (
             <div className={styles.carList}>
                 {
-                    cars.map(car =>
-                        (<CarCard key={car.id} {...car} />))
+                    cars.length !== 0 
+                        ? cars.map(car =>
+                            (<CarCard key={car.id} {...car} />))
+                        : <p>No free cars to rent</p>
                 }
             </div>
         );

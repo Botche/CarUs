@@ -9,10 +9,13 @@ import LogOut from '../pages/user/logout';
 import UserContext from '../../Context';
 import CreateCar from '../pages/addCar';
 import EditCar from '../pages/editCar';
-
-import '../../assets/styles/main.scss';
 import DeleteCar from '../pages/deleteCar';
 import Details from '../pages/detailsCar';
+import RentCar from '../pages/rentCar';
+import RentedCars from '../pages/rentedCars';
+
+import '../../assets/styles/main.scss';
+import Unrent from '../unrent-car';
 
 function Application(props) {
   const context = useContext(UserContext);
@@ -41,9 +44,22 @@ function Application(props) {
               : (<Redirect to="/" />)
           }
         </Route>
+        <Route path="/car/rent/:id" component={RentCar} />
+        <Route path="/car/unrent/:id">
+          { isLoggedIn === true
+              ? (<Unrent />)
+              : (<Redirect to="/" />)
+          }
+        </Route>
         <Route path="/user/logout">
           { isLoggedIn === true
               ? (<LogOut /> )
+              : (<Redirect to="/" />)
+          }
+        </Route>
+        <Route path="/user/rented-cars">
+          { isLoggedIn === true
+              ? (<RentedCars />)
               : (<Redirect to="/" />)
           }
         </Route>

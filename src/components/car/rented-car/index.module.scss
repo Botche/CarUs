@@ -1,0 +1,56 @@
+@import '../../../assets/styles/abstracts/variables/colors';
+
+.card {
+    overflow: hidden;
+
+    border: 0.1rem solid $color-black;
+    border-radius: 1rem;
+    box-shadow: 0 0 0.5rem 0 $color-black;
+
+    margin-bottom: 4rem;
+
+    flex-basis: 30%;
+
+    &__media {
+
+        width: 100%;
+        height: 20rem;
+    }
+
+    &__content {
+        padding: 2rem;
+    }
+
+    &__description {
+        width: 100%;
+
+        margin: 1rem 0;
+
+        word-wrap: break-word;
+    }
+
+    &__links {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    &__link {
+        color: $color-hover-link-card;
+        text-transform: capitalize;
+    
+        &:hover {
+            opacity: 0.9;
+
+            color: $color-white;
+        }
+
+        &--red {
+            background-color: $color-red;
+        }
+    }
+
+    &:hover { 
+        background-color: rgba(#a7a7a7, 0.1);
+    }
+}

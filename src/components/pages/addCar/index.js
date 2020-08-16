@@ -48,7 +48,10 @@ function CreateCar (props) {
                 uid,
                 email,
                 description,
-                imageUrl
+                imageUrl,
+                isRented: false,
+                rentedToDate: '',
+                renterId: ''
             });
     
             history.push('/');
